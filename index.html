@@ -47,36 +47,76 @@
     </form>
     <section class="color-select">
         <section class="sliders">
-            <div class="slider red" id="slider-red"></div>
-            <div class="slider green" id="slider-green"></div>
-            <div class="slider blue" id="slider-blue"></div>
+            <div class="slider red" id="sliderRed"></div>
+            <div class="slider green" id="sliderGreen"></div>
+            <div class="slider blue" id="sliderBlue"></div>
         </section>
         <section class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</section>
     </section>
     <script>
-        // run sliders
-        $( "#slider-red" ).slider();
-        $( "#slider-green" ).slider();
-        $( "#slider-blue" ).slider();
-        // set range
-        $( "#slider-red" ).slider({
-            min: 0,
-            max: 255,
-            step: 1,
-        });
-        $( "#slider-green" ).slider({
-            min: 0,
-            max: 255,
-            step: 1,
-        });
-        $( "#slider-blue" ).slider({
-            min: 0,
-            max: 255,
-            step: 1,
-        });
-        
-        $( "#radio" ).controlgroup();
+        // init elements
+        $( "#radio" ).controlgroup({
+            create: () => {
+                $( "#button-color" ).data(
+                    {
+                        'sliderRed': 0,
+                        'sliderGreen': 0,
+                        'sliderBlue': 0,
+                        'active': true,
+                    }
+                );
+                $( "#button-bg" ).data(
+                    {
+                        'sliderRed': 255,
+                        'sliderGreen': 255,
+                        'sliderBlue': 255,
+                        'active': false,
+                    }
+                );
 
+            }
+        });
+        $( "#sliderRed" ).slider({
+            min: 0,
+            max: 255,
+            step: 1,
+        });
+        $( "#sliderGreen" ).slider({
+            min: 0,
+            max: 255,
+            step: 1,
+        });
+        $( "#sliderBlue" ).slider({
+            min: 0,
+            max: 255,
+            step: 1,
+            create: () => {
+                refreshSliders();
+            }
+        });
+
+        // events handle
+        $( "input" ).on("click", e => {
+            $( `input:not(${e.target.id})` ).data({'active': false});
+            $( e.target ).data({'active': true});
+            refreshSliders();
+        })
+        
+        $( '[class~="slider"]' ).on("slidechange", (e, ui) => handleSliderChange(e, ui));
+        // handler functions
+        function refreshSliders() {
+            const activeInput = $( "#button-color" ).data().active === true ? $( "#button-color" ) : $( "#button-bg" );
+            $( "#sliderRed" ).slider("value", activeInput.data("sliderRed"));
+            $( "#sliderGreen" ).slider("value", activeInput.data("sliderGreen"));
+            $( "#sliderBlue" ).slider("value", activeInput.data("sliderBlue"));
+        }
+
+        function handleSliderChange(e, ui) {
+            const activeInput = $( "#button-color" ).data().active === true ? $( "#button-color" ) : $( "#button-bg" );
+            const cssProp = activeInput[0].id === 'button-color' ? 'color' : 'backgroundColor';
+            activeInput.data(e.target.id.toString(), ui.value);
+            $( "section.text" ).css(cssProp, `rgb(${activeInput.data("sliderRed")}, ${activeInput.data("sliderGreen")}, ${activeInput.data("sliderBlue")})`);
+        }
     </script>
 </body>
 </html>
