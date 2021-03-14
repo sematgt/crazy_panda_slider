@@ -8,8 +8,69 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+    <style>
+        .slider { 
+            margin: 20px; 
+            width: 300px;
+        }	
+        .slider.red {
+            background-color: red;
+        }
+        .slider.green {
+            background-color: green;
+        }
+        .slider.blue {
+            background-color: blue;
+        }
+        section.color-select {
+            display: flex;
+            margin-top: 10px;
+        }
+        section.text {
+            padding: 5px;
+            border: 2px solid grey;
+            width: 300px;
+        }
+    </style>
 </head>
 <body>
-    
+    <fieldset>
+        <legend>Select:</legend>
+        <div class="controlgroup">
+          <button class="ui-button">color</button>
+          <button class="ui-button">backgroundColor</button>
+        </div>
+    </fieldset>
+    <section class="color-select">
+        <section class="sliders">
+            <div class="slider red" id="slider-red"></div>
+            <div class="slider green" id="slider-green"></div>
+            <div class="slider blue" id="slider-blue"></div>
+        </section>
+        <section class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</section>
+    </section>
+    <script>
+        // run sliders
+        $( "#slider-red" ).slider();
+        $( "#slider-green" ).slider();
+        $( "#slider-blue" ).slider();
+        // set range
+        $( "#slider-red" ).slider({
+            min: 0,
+            max: 255,
+            step: 1,
+        });
+        $( "#slider-green" ).slider({
+            min: 0,
+            max: 255,
+            step: 1,
+        });
+        $( "#slider-blue" ).slider({
+            min: 0,
+            max: 255,
+            step: 1,
+        });
+        
+    </script>
 </body>
 </html>
