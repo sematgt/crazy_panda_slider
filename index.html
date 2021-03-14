@@ -28,19 +28,23 @@
         }
         section.text {
             padding: 5px;
-            border: 2px solid grey;
+            border: 2px solid lightgrey;
             width: 300px;
         }
     </style>
 </head>
 <body>
+    <form>
     <fieldset>
         <legend>Select:</legend>
-        <div class="controlgroup">
-          <button class="ui-button">color</button>
-          <button class="ui-button">backgroundColor</button>
+        <div id="radio">
+          <input type="radio" id="button-color" name="color" checked="checked">
+          <label for="button-color">Color</label>
+          <input type="radio" id="button-bg" name="color">
+          <label for="button-bg">backgroundColor</label>
         </div>
     </fieldset>
+    </form>
     <section class="color-select">
         <section class="sliders">
             <div class="slider red" id="slider-red"></div>
@@ -71,6 +75,8 @@
             step: 1,
         });
         
+        $( "#radio" ).controlgroup();
+
     </script>
 </body>
 </html>
